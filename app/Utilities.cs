@@ -38,6 +38,7 @@ namespace LuaFlux
             Thread.Sleep(50);
             Console.Write("\b");
             Console.Write(": ");
+            Console.ResetColor();
         }
 
         public static string LuaFluxGetCommandFromAlias(string command)
