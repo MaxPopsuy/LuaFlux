@@ -1,22 +1,22 @@
-# StellarNotes - Stellar Terminal Task Management App
+# LuaFlux - Versatile Terminal Task Management App
 
-![Current version: PRE-ALPHA](https://img.shields.io/github/v/release/MaxPopsuy/StellarNotes?style=for-the-badge&labelColor=222&color=purple)
+![Current version: PRE-ALPHA](https://img.shields.io/github/v/release/MaxPopsuy/LuaFlux?style=for-the-badge&labelColor=222&color=purple)
 ![Date created: 08.09.24](https://img.shields.io/badge/date%20created-08.09.24-purple?style=for-the-badge&labelColor=222)
-![Last Commit](https://img.shields.io/github/last-commit/MaxPopsuy/StellarNotes/master?style=for-the-badge&labelColor=222&color=purple)
+![Last Commit](https://img.shields.io/github/last-commit/MaxPopsuy/LuaFlux/master?style=for-the-badge&labelColor=222&color=purple)
 
-![Code Size](https://img.shields.io/github/languages/code-size/MaxPopsuy/StellarNotes?style=for-the-badge&labelColor=222&color=purple)
-![Language](https://img.shields.io/github/languages/top/MaxPopsuy/StellarNotes?style=for-the-badge&labelColor=222&color=purple)
-[![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg?style=for-the-badge&labelColor=222)](https://github.com/MaxPopsuy/StellarNotes/blob/master/LICENSE.md)
+![Code Size](https://img.shields.io/github/languages/code-size/MaxPopsuy/LuaFlux?style=for-the-badge&labelColor=222&color=purple)
+![Language](https://img.shields.io/github/languages/top/MaxPopsuy/LuaFlux?style=for-the-badge&labelColor=222&color=purple)
+[![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg?style=for-the-badge&labelColor=222)](https://github.com/MaxPopsuy/LuaFlux/blob/master/LICENSE.md)
 
 ---
 
 ## Overview
 
-**StellarNotes** is a terminal-based task management app designed to help you organize and track your tasks with a cosmic touch. Whether you're scheduling tasks or managing your to-dos, StellarNotes offers a sleek, space-themed interface to keep you on track.
+**LuaFlux** is a terminal-based task management app designed to help you organize and track your tasks with a cosmic touch. Whether you're scheduling tasks or managing your to-dos, LuaFlux offers a sleek, space-themed interface to keep you on track.
 
 > [!IMPORTANT]
 > **Early Development Stage**  
-> StellarNotes is in its early development stages, some functions may not work or work poorly.
+> LuaFlux is in its early development stages, some functions may not work or work poorly.
 
 ### Key Features
 
@@ -29,7 +29,7 @@
 
 ## Releases Overview
 
-### Latest Release: [v1.0.0](https://github.com/MaxPopsuy/StellarNotes/releases/tag/v1.0.0)
+### Latest Release: [v1.0.0](https://github.com/MaxPopsuy/LuaFlux/releases/tag/v1.0.0)
 
 - **Date Released**: 08.09.24
 - **Changes**:
@@ -88,7 +88,7 @@
 
 ## Gallery
 
-![StellarNotes](https://github.com/YourUsername/NebulaTasks/blob/master/images/nebulatasks.png)
-![StellarNotes](https://github.com/YourUsername/NebulaTasks/blob/master/images/nebulatasks2.png)
+![LuaFlux](https://github.com/YourUsername/NebulaTasks/blob/master/images/nebulatasks.png)
+![LuaFlux](https://github.com/YourUsername/NebulaTasks/blob/master/images/nebulatasks2.png)
 
 ---
