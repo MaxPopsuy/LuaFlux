@@ -7,68 +7,72 @@ using static LuaFlux.Commands;
 using System.Linq;
 using System.Windows.Input;
 
-class Program
+
+namespace LuaFlux
 {
-
-    public static void Main(string[] args)
+    class Program
     {
-        Console.Title = "Entropy";
-        Utilities.LuaFluxScreen();
 
-        while (true)
+        public static void Main(string[] args)
         {
-            Utilities.LuaFluxWaitAnimation();
+            Console.Title = "Entropy";
+            Utilities.LuaFluxScreen();
 
-            string? input = Console.ReadLine();
-            string?[] output = input?.Split("&") ?? Array.Empty<string>();
-            //Entropy.Functions.HelpFunction(null, null);
-            Console.ForegroundColor = ConsoleColor.DarkMagenta;
-
-            foreach (string? raw in output)
+            while (true)
             {
-                string[] inputArray = raw?.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
+                Utilities.LuaFluxWaitAnimation();
 
-                string? command = null;
-                string? firstArgument = null;
-                string? secondArgument = null;
+                string? input = Console.ReadLine();
+                string?[] output = input?.Split("&") ?? Array.Empty<string>();
+                //Entropy.Functions.HelpFunction(null, null);
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
 
-                try
+                foreach (string? raw in output)
                 {
-                    command = inputArray[0];
-                    firstArgument = inputArray[1];
-                    secondArgument = inputArray[2];
-                }
-                catch
-                {
-                    //Console.WriteLine("Error have occured, please try again");
-                }
-                if (!string.IsNullOrEmpty(command))
-                {
-                    command = Utilities.LuaFluxGetCommandFromAlias(command);
+                    string[] inputArray = raw?.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
 
-                    if (!_commands.TryGetValue(command, out var commandMethod))
+                    string? command = null;
+                    string? firstArgument = null;
+                    string? secondArgument = null;
+
+                    try
                     {
-                        Console.WriteLine($"{command} is an unknown command, if you need help with commands, type 'help' \n");
+                        command = inputArray[0];
+                        firstArgument = inputArray[1];
+                        secondArgument = inputArray[2];
                     }
-                    else
+                    catch
                     {
-                        if (commandMethod != null)
+                        //Console.WriteLine("Error have occured, please try again");
+                    }
+                    if (!string.IsNullOrEmpty(command))
+                    {
+                        command = Utilities.LuaFluxGetCommandFromAlias(command);
+
+                        if (!_commands.TryGetValue(command, out var commandMethod))
                         {
-                            if (firstArgument != null && secondArgument != null)
+                            Console.WriteLine($"{command} is an unknown command, if you need help with commands, type 'help' \n");
+                        }
+                        else
+                        {
+                            if (commandMethod != null)
                             {
-                                commandMethod.Invoke(firstArgument, secondArgument);
-                            }
-                            else if (firstArgument != null)
-                            {
-                                commandMethod.Invoke(firstArgument, string.Empty);
-                            }
-                            else if (secondArgument != null)
-                            {
-                                commandMethod.Invoke(string.Empty, secondArgument);
-                            }
-                            else
-                            {
-                                commandMethod.Invoke(string.Empty, string.Empty);
+                                if (firstArgument != null && secondArgument != null)
+                                {
+                                    commandMethod.Invoke(firstArgument, secondArgument);
+                                }
+                                else if (firstArgument != null)
+                                {
+                                    commandMethod.Invoke(firstArgument, string.Empty);
+                                }
+                                else if (secondArgument != null)
+                                {
+                                    commandMethod.Invoke(string.Empty, secondArgument);
+                                }
+                                else
+                                {
+                                    commandMethod.Invoke(string.Empty, string.Empty);
+                                }
                             }
                         }
                     }
