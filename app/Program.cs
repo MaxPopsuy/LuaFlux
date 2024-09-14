@@ -3,7 +3,7 @@ using LuaFlux;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.Runtime.InteropServices;
-using static LuaFlux.Commands;
+using static LuaFlux.Common.Commands;
 using System.Linq;
 using System.Windows.Input;
 
@@ -17,6 +17,8 @@ namespace LuaFlux
         {
             Console.Title = "Entropy";
             Utilities.LuaFluxScreen();
+
+            Utilities.LuaFluxInitializeTodos();
 
             while (true)
             {
