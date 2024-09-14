@@ -83,6 +83,7 @@
 - Integration with calendar and other task management tools
 - Custom statuses/categories
 - Better customisation for todos
+- Boards management (ex.: create specific boards for school, home, programming tasks etc.)
 
 ### v1.3.0
 
