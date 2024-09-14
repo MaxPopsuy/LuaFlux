@@ -76,13 +76,25 @@
 ### v1.1.0
 
 - Introduction of advanced task filtering
-- Notification system for task reminders
 - Improved task management UI
 
 ### v1.2.0
 
 - Integration with calendar and other task management tools
-- Customizable themes for personalization
+- Custom statuses/categories
+- Better customisation for todos
+- Boards management (ex.: create specific boards for school, home, programming tasks etc.)
+
+### v1.3.0
+
+- Settings
+- Theme manager
+- Even more customisation 
+
+### v2.0.0
+
+- Fully customisable TerminalUI
+
 
 ---
 
