@@ -100,7 +100,7 @@
 
 ## Gallery
 
-![LuaFlux](https://github.com/YourUsername/NebulaTasks/blob/master/images/nebulatasks.png)
-![LuaFlux](https://github.com/YourUsername/NebulaTasks/blob/master/images/nebulatasks2.png)
+![LuaFlux](https://github.com/MaxPopsuy/LuaFlux/blob/master/images/luaflux.png)
+![LuaFlux](https://github.com/MaxPopsuy/LuaFlux/blob/master/images/luaflux2.png)
 
 ---
