@@ -27,8 +27,8 @@
 
 ---
 
-## Releases Overview
-<!--
+<!-- ## Releases Overview
+
 ### Latest Release: [v1.0.0](https://github.com/MaxPopsuy/LuaFlux/releases/tag/v1.0.0)
 
 - **Date Released**: 08.09.24
