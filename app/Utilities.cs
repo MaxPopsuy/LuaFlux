@@ -10,6 +10,10 @@ namespace LuaFlux
     internal class Utilities
     {
         public static readonly string TodosFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "LuaFlux", "todos.json");
+        public static int GenerateTodoId(List<Common.LuaFluxTodoItem> todos)
+        {
+            return todos.Count > 0 ? todos.Max(t => t.Id) + 1 : 1;
+        }
 
         public static void LuaFluxScreen()
         {

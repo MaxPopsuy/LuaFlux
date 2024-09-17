@@ -75,6 +75,7 @@ namespace LuaFlux
 
             todos.Items.Add(new LuaFluxTodoItem
             {
+                Id = GenerateTodoId(todos.Items),
                 Title = title,
                 Description = description,
                 TodoStatus = status,
