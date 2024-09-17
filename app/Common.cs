@@ -31,6 +31,13 @@ namespace LuaFlux
             [JsonConverter(typeof(StringEnumConverter))]
             public Status TodoStatus { get; set; } = Status.Backlog;
         }
+        public class TodoDisplayItem
+        {
+            public int Id { get; set; }
+            public string Title { get; set; }
+
+            public override string ToString() => $"{Id}: {Title}";
+        }
 
         public class ENums
         {
@@ -52,6 +59,8 @@ namespace LuaFlux
                 ["clear"] = ["", "clears console."],
                 ["view"] = ["", "show list of all todos"],
                 ["create"] = ["", "create new todo"],
+                ["edit"] = ["", "edit existing todo"],
+                ["delete"] = ["", "removes existing todo"],
             };
 
             public static Dictionary<string, string[]> _commandsAliases = new()
@@ -70,6 +79,8 @@ namespace LuaFlux
                 ["test"] = TestFunction,
                 ["view"] = ViewTodosFunction,
                 ["create"] = CreateTodoFunction,
+                ["edit"] = EditTodoFunction,
+                ["delete"] = DeleteTodoFunction,
             };
         }
     }

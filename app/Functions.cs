@@ -85,6 +85,51 @@ namespace LuaFlux
 
             AnsiConsole.MarkupLine("[fuchsia]Todo added successfully![/]");
         }
+        public static void EditTodoFunction(string _, string __)
+        {
+            var todos = LoadTodos();
+
+            var displayItems = todos.Items.Select(t => new TodoDisplayItem
+            {
+                Id = t.Id,
+                Title = t.Title
+            }).ToList();
+
+            var selectedTodo = AnsiConsole.Prompt(
+                new SelectionPrompt<TodoDisplayItem>()
+                    .Title("[purple]Select a todo to edit:[/]")
+                    .AddChoices(displayItems)
+            );
+
+            var todo = todos.Items.FirstOrDefault(t => t.Id == selectedTodo.Id);
+
+            if (todo != null)
+            {
+                var newTitle = AnsiConsole.Ask<string>(
+                    $"[purple]Enter the new [fuchsia]title[/] for todo ([italic]{todo.Title}[/]): [/]"
+                );
+                var newDescription = AnsiConsole.Ask<string>(
+                    $"[purple]Enter the new [fuchsia]description[/] for todo ([italic]{todo.Description}[/]): [/]"
+                );
+                var newStatus = AnsiConsole.Prompt(
+                    new SelectionPrompt<ENums.Status>()
+                        .Title($"[purple]Select the new [fuchsia]status[/] for the todo ([italic]{todo.TodoStatus.ToString()}[/]):[/]")
+                        .AddChoices(Enum.GetValues(typeof(ENums.Status)).Cast<ENums.Status>())
+                );
+
+                todo.Title = newTitle;
+                todo.Description = newDescription;
+                todo.TodoStatus = newStatus;
+
+                SaveToFile(Common.TodosFilePath, todos);
+                AnsiConsole.MarkupLine("[green]Todo updated successfully![/]");
+            }
+            else
+            {
+                AnsiConsole.MarkupLine("[red]Todo not found![/]");
+            }
+        }
+
     }
 
 }
