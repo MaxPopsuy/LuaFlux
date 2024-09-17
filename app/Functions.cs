@@ -1,6 +1,7 @@
 ﻿using Spectre.Console;
 using static LuaFlux.Utilities;
 using static LuaFlux.Common.ENums;
+using static LuaFlux.Common;
 
 namespace LuaFlux
 {
@@ -13,7 +14,7 @@ namespace LuaFlux
         public static void ViewTodosFunction(string _, string __)
         {
             Todos todos = LoadTodos();
-            var categories = Enum.GetValues(typeof(Category)).Cast<Category>();
+            var categories = Enum.GetValues(typeof(Common.ENums.Status)).Cast<Common.ENums.Status>();
 
             var table = new Table().Border(TableBorder.Double).Title("{TODO}: {TEST BOARD}");
             foreach (var category in categories)
@@ -22,7 +23,7 @@ namespace LuaFlux
             }
 
             int maxTodos = todos.Items
-                .GroupBy(t => t.TodoCategory)
+                .GroupBy(t => t.TodoStatus)
                 .Max(g => g.Count());
 
             for (int i = 0; i < maxTodos; i++)
@@ -32,7 +33,7 @@ namespace LuaFlux
                 foreach (var category in categories)
                 {
                     var todo = todos.Items
-                        .Where(t => t.TodoCategory == category)
+                        .Where(t => t.TodoStatus == category)
                         .Skip(i)
                         .FirstOrDefault();
 
@@ -60,5 +61,29 @@ namespace LuaFlux
 
             AnsiConsole.Write(table);
         }
+        internal static void CreateTodoFunction(string _, string __)
+        {
+            var title = AnsiConsole.Ask<string>("[purple]Enter the [fuchsia]title[/] of the todo: [/]");
+            var description = AnsiConsole.Ask<string>("[purple]Enter the [fuchsia]description[/] of the todo: [/]");
+
+            var status = AnsiConsole.Prompt(
+                new SelectionPrompt<ENums.Status>()
+                    .Title("[purple]Select the [fuchsia]status[/] of the todo[/]")
+                    .AddChoices(Enum.GetValues(typeof(ENums.Status)).Cast<ENums.Status>()));
+
+            var todos = LoadTodos();
+
+            todos.Items.Add(new LuaFluxTodoItem
+            {
+                Title = title,
+                Description = description,
+                TodoStatus = status,
+            });
+
+            SaveToFile(Utilities.TodosFilePath, todos);
+
+            AnsiConsole.MarkupLine("[fuchsia]Todo added successfully![/]");
+        }
     }
+
 }

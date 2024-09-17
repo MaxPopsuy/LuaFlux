@@ -15,7 +15,7 @@ namespace LuaFlux
 
         public static void Main(string[] args)
         {
-            Console.Title = "Entropy";
+            Console.Title = "LuaFlux";
             Utilities.LuaFluxScreen();
 
             Utilities.LuaFluxInitializeTodos();

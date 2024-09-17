@@ -30,8 +30,6 @@ namespace LuaFlux
 
             [JsonConverter(typeof(StringEnumConverter))]
             public Status TodoStatus { get; set; } = Status.Backlog;
-            [JsonConverter(typeof(StringEnumConverter))]
-            public Category TodoCategory { get; set; } = Category.Backlog;
         }
 
         public class ENums
@@ -44,37 +42,34 @@ namespace LuaFlux
                 Done,
                 Frozen
             }            
-            public enum Category
-            {
-                Backlog,
-                Todo,
-                Doing,
-                Done,
-                Frozen
-            }
         }
 
         internal class Commands
         {
-            public static Dictionary<string, string[]> _commandsDsc = new() // string[] = ["arguments", "description"]
+            public static Dictionary<string, string[]> _commandsDsc = new() // string[] = ["parameters", "description"]
             {
                 ["help"] = ["", "shows every command and short description of them"],
-                ["clear"] = ["", "clears console. (aliases: clr, cls)"],
+                ["clear"] = ["", "clears console."],
+                ["view"] = ["", "show list of all todos"],
+                ["create"] = ["", "create new todo"],
             };
 
             public static Dictionary<string, string[]> _commandsAliases = new()
             {
-                ["help"] = ["h", "help", "g"],
-                ["clear"] = ["clr", "cls", "clear"],
+                ["help"] = ["h", "g"],
+                ["clear"] = ["clr", "cls"],
                 ["test"] = ["t"],
-                ["view"] = ["v"]
+                ["view"] = ["v"],
+                ["create"] = ["c"],
             };
 
 
             public static Dictionary<string, Action<string, string>> _commands = new Dictionary<string, Action<string, string>>()
             {
+                //["help"] = HelpFunction,
                 ["test"] = TestFunction,
                 ["view"] = ViewTodosFunction,
+                ["create"] = CreateTodoFunction,
             };
         }
     }
