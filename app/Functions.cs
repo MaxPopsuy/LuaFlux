@@ -106,20 +106,36 @@ namespace LuaFlux
             if (todo != null)
             {
                 var newTitle = AnsiConsole.Ask<string>(
-                    $"[purple]Enter the new [fuchsia]title[/] for todo ([italic]{todo.Title}[/]): [/]"
+                    $"[purple]Enter the new [fuchsia]title[/] for todo, or type '&skip' to keep it ([italic]{todo.Title}[/]): [/]"
                 );
+
+                if (string.IsNullOrWhiteSpace(newTitle) || newTitle.Equals("&skip", StringComparison.OrdinalIgnoreCase))
+                {
+                    newTitle = todo.Title;
+                }
+
                 var newDescription = AnsiConsole.Ask<string>(
-                    $"[purple]Enter the new [fuchsia]description[/] for todo ([italic]{todo.Description}[/]): [/]"
+                    $"[purple]Enter the new [fuchsia]description[/] for todo, or type '&skip' to keep it ([italic]{todo.Description}[/]): [/]"
                 );
+
+                if (string.IsNullOrWhiteSpace(newDescription) || newDescription.Equals("&skip", StringComparison.OrdinalIgnoreCase))
+                {
+                    newDescription = todo.Description;
+                }
+
                 var newStatus = AnsiConsole.Prompt(
                     new SelectionPrompt<ENums.Status>()
-                        .Title($"[purple]Select the new [fuchsia]status[/] for the todo ([italic]{todo.TodoStatus.ToString()}[/]):[/]")
+                        .Title($"[purple]Select the new [fuchsia]status[/] for the todo ([italic]{todo.TodoStatus}[/]), or type '&skip' to keep it:[/]")
                         .AddChoices(Enum.GetValues(typeof(ENums.Status)).Cast<ENums.Status>())
                 );
 
+                if (!newStatus.Equals(todo.TodoStatus))
+                {
+                    todo.TodoStatus = newStatus;
+                }
+
                 todo.Title = newTitle;
                 todo.Description = newDescription;
-                todo.TodoStatus = newStatus;
 
                 SaveToFile(Common.TodosFilePath, todos);
                 AnsiConsole.MarkupLine("[green]Todo updated successfully![/]");
