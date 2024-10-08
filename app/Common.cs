@@ -28,7 +28,7 @@ namespace LuaFlux
             public string Title { get; set; } = "";
             public string Description { get; set; } = "";
 
-            [JsonConverter(typeof(StringEnumConverter))]
+
             public Status TodoStatus { get; set; } = Status.Backlog;
         }
         public class TodoDisplayItem
@@ -80,7 +80,7 @@ namespace LuaFlux
                 ["view"] = ViewTodosFunction,
                 ["create"] = CreateTodoFunction,
                 ["edit"] = EditTodoFunction,
-                ["delete"] = DeleteTodoFunction,
+                //["delete"] = ,
             };
         }
     }
