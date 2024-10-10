@@ -76,7 +76,7 @@ namespace LuaFlux
 
             public static Dictionary<string, Action<string, string>> _commands = new Dictionary<string, Action<string, string>>()
             {
-                //["help"] = HelpFunction,
+                ["help"] = HelpFunction,
                 ["test"] = TestFunction,
                 ["view"] = ViewTodosFunction,
                 ["create"] = CreateTodoFunction,
