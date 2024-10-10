@@ -14,12 +14,22 @@ namespace LuaFlux
         public static void ViewTodosFunction(string _, string __)
         {
             Todos todos = LoadTodos();
-            var categories = Enum.GetValues(typeof(Common.ENums.Status)).Cast<Common.ENums.Status>();
+            var categories = Enum.GetValues(typeof(ENums.Status)).Cast<ENums.Status>();
 
-            var table = new Table().Border(TableBorder.Double).Title("{TODO}: {TEST BOARD}");
+            var table = new Table().Border(TableBorder.Double).Title("{TODO}: {TEST BOARD}").BorderColor(Color.Purple);
             foreach (var category in categories)
             {
-                table.AddColumn(category.ToString());
+                string colorizedCategory = category switch
+                {
+                    Common.ENums.Status.Backlog => "[yellow]Backlog[/]",
+                    Common.ENums.Status.Todo => "[blue]Todo[/]",
+                    Common.ENums.Status.Doing => "[green]Doing[/]",
+                    Common.ENums.Status.Done => "[magenta]Done[/]",
+                    Common.ENums.Status.Frozen => "[cyan1]Frozen[/]",
+                    _ => category.ToString()
+                };
+
+                table.AddColumn(colorizedCategory);
             }
 
             int maxTodos = todos.Items
@@ -38,16 +48,15 @@ namespace LuaFlux
                         .FirstOrDefault();
 
                     var content = todo != null
-                        ? $@"[bold]ID:[/] {todo.Id}
-[bold]Title:[/] {todo.Title}
-[bold]Description:[/] {todo.Description}
-[bold]Status:[/] {todo.TodoStatus}"
+                        ? $@"[bold fuchsia]Title:[/] [white]{todo.Title}[/]
+[bold fuchsia]Description:[/] [white]{todo.Description}[/]
+[bold fuchsia]Status:[/] [white]{todo.TodoStatus}[/]"
                         : string.Empty;
 
                     if (!string.IsNullOrWhiteSpace(content))
                     {
                         var panel = new Panel(content)
-                            .Border(BoxBorder.Ascii);
+                            .Border(BoxBorder.Ascii).BorderColor(Color.Cyan1).Header($"[bold cyan]ID: [white]{todo.Id}[/][/]", Justify.Center);
                         row.Add(panel);
                     }
                     else
