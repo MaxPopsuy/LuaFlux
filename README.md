@@ -78,6 +78,7 @@
 - Introduction of advanced task filtering
 - Improved task management UI
 - Archive
+- Refactoring
 
 ### v1.2.0
 
@@ -90,6 +91,7 @@
 
 - Settings
 - Theme manager
+- Universal edit function
 - Even more customisation 
 
 ### v2.0.0
