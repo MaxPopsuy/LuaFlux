@@ -106,26 +106,26 @@ namespace LuaFlux
             if (todo != null)
             {
                 var newTitle = AnsiConsole.Ask<string>(
-                    $"[purple]Enter the new [fuchsia]title[/] for todo, or type '&skip' to keep it ([italic]{todo.Title}[/]): [/]"
+                    $"[purple]Enter the new [fuchsia]title[/] for the todo, or type '-' to keep the current one ([italic white]{todo.Title}[/]): [/]"
                 );
 
-                if (string.IsNullOrWhiteSpace(newTitle) || newTitle.Equals("&skip", StringComparison.OrdinalIgnoreCase))
+                if (!newTitle.Equals("-", StringComparison.OrdinalIgnoreCase))
                 {
-                    newTitle = todo.Title;
+                    todo.Title = newTitle;
                 }
 
                 var newDescription = AnsiConsole.Ask<string>(
-                    $"[purple]Enter the new [fuchsia]description[/] for todo, or type '&skip' to keep it ([italic]{todo.Description}[/]): [/]"
+                    $"[purple]Enter the new [fuchsia]description[/] for the todo, or type '-' to keep the current one ([italic white]{todo.Description}[/]): [/]"
                 );
 
-                if (string.IsNullOrWhiteSpace(newDescription) || newDescription.Equals("&skip", StringComparison.OrdinalIgnoreCase))
+                if (!newDescription.Equals("-", StringComparison.OrdinalIgnoreCase))
                 {
-                    newDescription = todo.Description;
+                    todo.Description = newDescription;
                 }
 
                 var newStatus = AnsiConsole.Prompt(
                     new SelectionPrompt<ENums.Status>()
-                        .Title($"[purple]Select the new [fuchsia]status[/] for the todo ([italic]{todo.TodoStatus}[/]), or type '&skip' to keep it:[/]")
+                        .Title($"[purple]Select the new [fuchsia]status[/] for the todo ([italic white]{todo.TodoStatus}[/]):[/]")
                         .AddChoices(Enum.GetValues(typeof(ENums.Status)).Cast<ENums.Status>())
                 );
 
@@ -134,11 +134,52 @@ namespace LuaFlux
                     todo.TodoStatus = newStatus;
                 }
 
-                todo.Title = newTitle;
-                todo.Description = newDescription;
-
                 SaveToFile(Common.TodosFilePath, todos);
                 AnsiConsole.MarkupLine("[green]Todo updated successfully![/]");
+            }
+            else
+            {
+                AnsiConsole.MarkupLine("[red]Todo not found![/]");
+            }
+        }
+
+        public static void RemoveTodoFunction(string _, string __)
+        {
+            Todos todos = LoadTodos();
+
+            var displayItems = todos.Items.Select(t => new TodoDisplayItem
+            {
+                Id = t.Id,
+                Title = t.Title
+            }).ToList();
+
+            var selectedTodo = AnsiConsole.Prompt(
+                new SelectionPrompt<TodoDisplayItem>()
+                    .Title("[purple]Select a todo to edit:[/]")
+                    .AddChoices(displayItems)
+            );
+
+            LuaFluxTodoItem todo = todos.Items.FirstOrDefault(t => t.Id == selectedTodo.Id);
+
+            if (todo != null)
+            {
+                AnsiConsole.MarkupLine("[purple]Are you sure you want to [bold red]REMOVE[/] this ToDo? [/]");
+
+                Panel todoPanel = new Panel($"[purple]Title: [white]{todo.Title}[/]\nDescription: [white]{todo.Description}[/]\nID: [white]{todo.Id}[/]\nStatus: [green]{todo.TodoStatus.ToString()}[/][/]").Header($"[purple]ToDo: [white]{todo.Id}[/][/]").HeaderAlignment(Justify.Center);
+                AnsiConsole.Write(todoPanel);
+
+                var confirm = AnsiConsole.Prompt(new SelectionPrompt<bool>().Title($"[red]Are you sure you want to remove todo:[/] [bold white]{todo.Id}: {todo.Title}[/]?").AddChoices(true, false).HighlightStyle(Color.Fuchsia));
+
+                if (confirm)
+                {
+                    todos.Items.Remove(todo);
+                    SaveToFile(Common.TodosFilePath, todos);
+                    AnsiConsole.MarkupLine($"[green]Todo '{todo.Title}' has been successfully removed.[/]");
+                }
+                else
+                {
+                    AnsiConsole.MarkupLine("[yellow]Action cancelled. Todo was not removed.[/]");
+                }
             }
             else
             {

@@ -60,7 +60,7 @@ namespace LuaFlux
                 ["view"] = ["", "show list of all todos"],
                 ["create"] = ["", "create new todo"],
                 ["edit"] = ["", "edit existing todo"],
-                ["delete"] = ["", "removes existing todo"],
+                ["remove"] = ["", "removes existing todo"],
             };
 
             public static Dictionary<string, string[]> _commandsAliases = new()
@@ -70,6 +70,7 @@ namespace LuaFlux
                 ["test"] = ["t"],
                 ["view"] = ["v"],
                 ["create"] = ["c"],
+                ["remove"] = ["rm", "del", "delete"],
             };
 
 
@@ -80,7 +81,7 @@ namespace LuaFlux
                 ["view"] = ViewTodosFunction,
                 ["create"] = CreateTodoFunction,
                 ["edit"] = EditTodoFunction,
-                //["delete"] = ,
+                ["remove"] = RemoveTodoFunction,
             };
         }
     }
