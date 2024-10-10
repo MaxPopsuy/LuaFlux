@@ -14,6 +14,12 @@ namespace LuaFlux
         public static void ViewTodosFunction(string _, string __)
         {
             Todos todos = LoadTodos();
+            if (todos.Items.Count == 0)
+            {
+                AnsiConsole.MarkupLine("[red]There are no todos available. Perhaps you should create one?[/]");
+                return;
+            }
+
             var categories = Enum.GetValues(typeof(ENums.Status)).Cast<ENums.Status>();
 
             var table = new Table().Border(TableBorder.Double).Title("{TODO}: {TEST BOARD}").BorderColor(Color.Purple);
