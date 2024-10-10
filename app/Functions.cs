@@ -137,7 +137,7 @@ namespace LuaFlux
 
             var categories = Enum.GetValues(typeof(ENums.Status)).Cast<ENums.Status>();
 
-            var table = new Table().Border(TableBorder.Double).Title("{TODO}: {TEST BOARD}").BorderColor(Color.Purple);
+            var table = new Table().Border(TableBorder.Double).Title("{TODO}: {TEST BOARD}").BorderColor(Color.Purple).Expand();
             foreach (var category in categories)
             {
                 string colorizedCategory = category switch
@@ -177,7 +177,7 @@ namespace LuaFlux
                     if (!string.IsNullOrWhiteSpace(content))
                     {
                         var panel = new Panel(content)
-                            .Border(BoxBorder.Ascii).BorderColor(Color.Cyan1).Header($"[bold cyan]ID: [white]{todo.Id}[/][/]", Justify.Center);
+                            .Border(BoxBorder.Ascii).BorderColor(Color.Cyan1).Header($"[bold cyan]ID: [white]{todo.Id}[/][/]", Justify.Center).Expand();
                         row.Add(panel);
                     }
                     else
@@ -227,8 +227,8 @@ namespace LuaFlux
 
             var selectedTodo = AnsiConsole.Prompt(
                 new SelectionPrompt<TodoDisplayItem>()
-                    .Title("[purple]Select a todo to edit:[/]")
-                    .AddChoices(displayItems)
+                    .Title("[purple]Select a [cyan1]todo[/] to edit:[/]")
+                    .AddChoices(displayItems).HighlightStyle(Color.Fuchsia)
             );
 
             var todo = todos.Items.FirstOrDefault(t => t.Id == selectedTodo.Id);
@@ -285,8 +285,8 @@ namespace LuaFlux
 
             var selectedTodo = AnsiConsole.Prompt(
                 new SelectionPrompt<TodoDisplayItem>()
-                    .Title("[purple]Select a todo to edit:[/]")
-                    .AddChoices(displayItems)
+                    .Title("[purple]Select a [cyan1]todo[/] to remove:[/]")
+                    .AddChoices(displayItems).HighlightStyle(Color.Fuchsia)
             );
 
             LuaFluxTodoItem todo = todos.Items.FirstOrDefault(t => t.Id == selectedTodo.Id);
@@ -310,6 +310,103 @@ namespace LuaFlux
                 {
                     AnsiConsole.MarkupLine("[yellow]Action cancelled. Todo was not removed.[/]");
                 }
+            }
+            else
+            {
+                AnsiConsole.MarkupLine("[red]Todo not found![/]");
+            }
+        }
+
+        public static void CompleteTodoFunction(string _, string __)
+        {
+            Todos todos = LoadTodos();
+
+            if (todos.Items.Count == 0)
+            {
+                AnsiConsole.MarkupLine("[red]There are no todos available to complete.[/]");
+                return;
+            }
+
+            var displayItems = todos.Items
+                .Where(t => t.TodoStatus != ENums.Status.Done)
+                .Select(t => new TodoDisplayItem
+                {
+                    Id = t.Id,
+                    Title = t.Title
+                }).ToList();
+
+            var selectedTodo = AnsiConsole.Prompt(
+                new SelectionPrompt<TodoDisplayItem>()
+                    .Title("[purple]Select a [cyan1]todo[/] to mark as [green]completed:[/][/]")
+                    .AddChoices(displayItems)
+                    .HighlightStyle(Color.Fuchsia)
+            );
+
+            var todo = todos.Items.FirstOrDefault(t => t.Id == selectedTodo.Id);
+
+            if (todo != null)
+            {
+                var confirm = AnsiConsole.Prompt(new SelectionPrompt<bool>()
+                    .Title($"[purple]Are you sure you want to mark todo: [bold cyan1]{todo.Id}: {todo.Title}[/] as completed?[/]?")
+                    .AddChoices(true, false)
+                    .HighlightStyle(Color.Fuchsia)
+                );
+
+                if (confirm)
+                {
+                    todo.TodoStatus = ENums.Status.Done;
+                    SaveToFile(Common.TodosFilePath, todos);
+                    AnsiConsole.MarkupLine("[green]Todo marked as completed successfully![/]");
+                }
+                else
+                {
+                    AnsiConsole.MarkupLine("[yellow]Operation canceled.[/]");
+                }
+            }
+            else
+            {
+                AnsiConsole.MarkupLine("[red]Todo not found![/]");
+            }
+        }
+
+        public static void ChangeTodoStatusFunction(string _, string __)
+        {
+            Todos todos = LoadTodos();
+
+            if (todos.Items.Count == 0)
+            {
+                AnsiConsole.MarkupLine("[red]There are no todos available to change status.[/]");
+                return;
+            }
+
+            var displayItems = todos.Items
+                .Select(t => new TodoDisplayItem
+                {
+                    Id = t.Id,
+                    Title = t.Title
+                }).ToList();
+
+            var selectedTodo = AnsiConsole.Prompt(
+                new SelectionPrompt<TodoDisplayItem>()
+                    .Title("[purple]Select a [cyan1]todo[/] to change its status:[/][/]")
+                    .AddChoices(displayItems)
+                    .HighlightStyle(Color.Fuchsia)
+            );
+
+            var todo = todos.Items.FirstOrDefault(t => t.Id == selectedTodo.Id);
+
+            if (todo != null)
+            {
+                var newStatus = AnsiConsole.Prompt(
+                    new SelectionPrompt<ENums.Status>()
+                        .Title($"[purple]Select the new [fuchsia]status[/] for todo: [cyan1]{todo.Title}[/]:[/]")
+                        .AddChoices(Enum.GetValues(typeof(ENums.Status)).Cast<ENums.Status>())
+                        .HighlightStyle(Color.Fuchsia)
+                );
+
+                todo.TodoStatus = newStatus;
+                SaveToFile(Common.TodosFilePath, todos);
+                AnsiConsole.MarkupLine("[green]Todo status updated successfully![/]");
             }
             else
             {

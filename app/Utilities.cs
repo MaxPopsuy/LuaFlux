@@ -33,14 +33,15 @@ namespace LuaFlux
         public static void LuaFluxWaitAnimation()
         {
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
-
-            for (int i = 0; i < 3; i++)
-            {
-                Console.Write(">>");
-                System.Threading.Thread.Sleep(50);
-                Console.Write("\b"); // Clear the current ">>"
-            }
-
+            Console.Write(">>");
+            Thread.Sleep(50);
+            Console.Write("\b");
+            Console.Write(">>");
+            Thread.Sleep(50);
+            Console.Write("\b");
+            Console.Write(">>");
+            Thread.Sleep(50);
+            Console.Write("\b");
             Console.Write(": ");
             Console.ResetColor();
         }

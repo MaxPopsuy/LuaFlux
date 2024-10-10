@@ -61,6 +61,7 @@ namespace LuaFlux
                 ["create"] = ["", "create new todo"],
                 ["edit"] = ["", "edit existing todo"],
                 ["remove"] = ["", "removes existing todo"],
+                ["complete"] = ["", "Select a todo to mark it as done"],
             };
 
             public static Dictionary<string, string[]> _commandsAliases = new()
@@ -71,6 +72,7 @@ namespace LuaFlux
                 ["view"] = ["v"],
                 ["create"] = ["c"],
                 ["remove"] = ["rm", "del", "delete"],
+                ["complete"] = ["done", "compl"],
             };
 
 
@@ -82,6 +84,7 @@ namespace LuaFlux
                 ["create"] = CreateTodoFunction,
                 ["edit"] = EditTodoFunction,
                 ["remove"] = RemoveTodoFunction,
+                ["complete"] = CompleteTodoFunction,
             };
         }
     }
