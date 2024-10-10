@@ -77,6 +77,7 @@
 
 - Introduction of advanced task filtering
 - Improved task management UI
+- Archive
 
 ### v1.2.0
 
