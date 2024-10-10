@@ -120,6 +120,12 @@ namespace LuaFlux
 
             Console.WriteLine();
         }
+
+        public static void ClearFunction(string _, string __)
+        {
+            Console.Write("\f\u001bc\x1b[3J");
+            Utilities.LuaFluxScreen();
+        }
         public static void ViewTodosFunction(string _, string __)
         {
             Todos todos = LoadTodos();
